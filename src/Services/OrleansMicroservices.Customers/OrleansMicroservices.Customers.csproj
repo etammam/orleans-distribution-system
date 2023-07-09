@@ -11,8 +11,4 @@
 		<PackageReference Include="OrleansDashboard" Version="7.2.1" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <ProjectReference Include="..\OrleansMicroservices.IMessages\OrleansMicroservices.IMessages.csproj" />
-	</ItemGroup>
-
 </Project>
