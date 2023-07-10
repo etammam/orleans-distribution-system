@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Logging;
-using Orleans;
 using OrleansMicroservices.IMessages;
 
 namespace OrleansMicroservices.Messages.Grains
@@ -16,6 +15,12 @@ namespace OrleansMicroservices.Messages.Grains
         public async Task SayHelloAsync(string name)
         {
             _logger.LogInformation("Hello {name}", name);
+            await Task.CompletedTask;
+        }
+
+        public async Task SayHelloAsync()
+        {
+            _logger.LogInformation("Hello...");
             await Task.CompletedTask;
         }
     }
