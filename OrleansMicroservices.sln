@@ -7,27 +7,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{9A9AF853-C7F
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Messages", "Messages", "{31E79182-7448-4817-A280-D1332C7E6D3B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrleansMicroservices.IMessages", "src\Messages\OrleansMicroservices.IMessages\OrleansMicroservices.IMessages.csproj", "{33A92319-39CC-4A02-9527-E10E5CDA2B58}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrleansMicroservices.IMessages", "src\Messages\OrleansMicroservices.IMessages\OrleansMicroservices.IMessages.csproj", "{33A92319-39CC-4A02-9527-E10E5CDA2B58}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrleansMicroservices.Messages", "src\Messages\OrleansMicroservices.Messages\OrleansMicroservices.Messages.csproj", "{ACB1874E-944A-446C-9E75-5CDA765468CD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrleansMicroservices.ApiGateway", "src\OrleansMicroservices.ApiGateway\OrleansMicroservices.ApiGateway.csproj", "{BFB11254-FB81-404D-AEF0-02D7EABEF275}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrleansMicroservices.ApiGateway", "src\OrleansMicroservices.ApiGateway\OrleansMicroservices.ApiGateway.csproj", "{BFB11254-FB81-404D-AEF0-02D7EABEF275}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrleansMicroservices.Common", "src\OrleansMicroservices.Common\OrleansMicroservices.Common.csproj", "{1AE8BE41-29BA-4EAD-944B-F054E9B5A336}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrleansMicroservices.Common", "src\OrleansMicroservices.Common\OrleansMicroservices.Common.csproj", "{1AE8BE41-29BA-4EAD-944B-F054E9B5A336}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{8D1EF93F-D173-47A5-ADB7-E75B88F9983F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrleansMicroservices.Customers", "src\Services\OrleansMicroservices.Customers\OrleansMicroservices.Customers.csproj", "{71D626AD-BC12-4C2E-A884-02A129AB95F0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrleansMicroservices.Customers", "src\Services\OrleansMicroservices.Customers\OrleansMicroservices.Customers.csproj", "{71D626AD-BC12-4C2E-A884-02A129AB95F0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrleansMicroservices.Orders", "src\Services\OrleansMicroservices.Orders\OrleansMicroservices.Orders.csproj", "{6E87D6C5-4898-44ED-95B4-6605DB37AC1F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrleansMicroservices.Orders", "src\Services\OrleansMicroservices.Orders\OrleansMicroservices.Orders.csproj", "{6E87D6C5-4898-44ED-95B4-6605DB37AC1F}"
 EndProject
 Global
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {688D6487-733D-4AF1-8914-84ABC7493591}
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|x64 = Debug|x64
@@ -49,18 +41,6 @@ Global
 		{33A92319-39CC-4A02-9527-E10E5CDA2B58}.Release|x64.Build.0 = Release|Any CPU
 		{33A92319-39CC-4A02-9527-E10E5CDA2B58}.Release|x86.ActiveCfg = Release|Any CPU
 		{33A92319-39CC-4A02-9527-E10E5CDA2B58}.Release|x86.Build.0 = Release|Any CPU
-		{ACB1874E-944A-446C-9E75-5CDA765468CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{ACB1874E-944A-446C-9E75-5CDA765468CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{ACB1874E-944A-446C-9E75-5CDA765468CD}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{ACB1874E-944A-446C-9E75-5CDA765468CD}.Debug|x64.Build.0 = Debug|Any CPU
-		{ACB1874E-944A-446C-9E75-5CDA765468CD}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{ACB1874E-944A-446C-9E75-5CDA765468CD}.Debug|x86.Build.0 = Debug|Any CPU
-		{ACB1874E-944A-446C-9E75-5CDA765468CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{ACB1874E-944A-446C-9E75-5CDA765468CD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{ACB1874E-944A-446C-9E75-5CDA765468CD}.Release|x64.ActiveCfg = Release|Any CPU
-		{ACB1874E-944A-446C-9E75-5CDA765468CD}.Release|x64.Build.0 = Release|Any CPU
-		{ACB1874E-944A-446C-9E75-5CDA765468CD}.Release|x86.ActiveCfg = Release|Any CPU
-		{ACB1874E-944A-446C-9E75-5CDA765468CD}.Release|x86.Build.0 = Release|Any CPU
 		{BFB11254-FB81-404D-AEF0-02D7EABEF275}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BFB11254-FB81-404D-AEF0-02D7EABEF275}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BFB11254-FB81-404D-AEF0-02D7EABEF275}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -110,14 +90,19 @@ Global
 		{6E87D6C5-4898-44ED-95B4-6605DB37AC1F}.Release|x86.ActiveCfg = Release|Any CPU
 		{6E87D6C5-4898-44ED-95B4-6605DB37AC1F}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{31E79182-7448-4817-A280-D1332C7E6D3B} = {9A9AF853-C7FC-4416-BC0D-1D1D802AA913}
 		{33A92319-39CC-4A02-9527-E10E5CDA2B58} = {31E79182-7448-4817-A280-D1332C7E6D3B}
-		{ACB1874E-944A-446C-9E75-5CDA765468CD} = {31E79182-7448-4817-A280-D1332C7E6D3B}
 		{BFB11254-FB81-404D-AEF0-02D7EABEF275} = {9A9AF853-C7FC-4416-BC0D-1D1D802AA913}
 		{1AE8BE41-29BA-4EAD-944B-F054E9B5A336} = {9A9AF853-C7FC-4416-BC0D-1D1D802AA913}
 		{8D1EF93F-D173-47A5-ADB7-E75B88F9983F} = {9A9AF853-C7FC-4416-BC0D-1D1D802AA913}
 		{71D626AD-BC12-4C2E-A884-02A129AB95F0} = {8D1EF93F-D173-47A5-ADB7-E75B88F9983F}
 		{6E87D6C5-4898-44ED-95B4-6605DB37AC1F} = {8D1EF93F-D173-47A5-ADB7-E75B88F9983F}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {688D6487-733D-4AF1-8914-84ABC7493591}
 	EndGlobalSection
 EndGlobal

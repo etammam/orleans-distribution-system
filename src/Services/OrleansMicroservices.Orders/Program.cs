@@ -1,24 +1,33 @@
+using System.Net;
+using OrleansMicroservices.Common;
 using OrleansMicroservices.IMessages;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Host.UseOrleansClient(options =>
+
+builder.Host.UseOrleans(siloBuilder =>
 {
-    options.UseLocalhostClustering(
-        serviceId: "customers-services",
-        clusterId: "customers-cluster"
-    );
+    siloBuilder.AddActivityPropagation();
+    siloBuilder.AddMemoryGrainStorage("OrleansMemoryProvider-Orders");
+
+
+    siloBuilder.UseConsulSiloClustering(consulOptions =>
+    {
+        consulOptions.ConfigureConsulClient(new Uri("http://localhost:8500"));
+    });
+    siloBuilder.ConfigureEndpoints(IPAddress.Loopback, siloPort: NetworkScanner.GetPort(), listenOnAnyHostAddress: true, gatewayPort: 30000);
 });
+
+
 var app = builder.Build();
 
 app.MapGet("/", () => "Hello World!");
 
-app.MapGet("/send-greet", async (IServiceProvider serviceProvider) =>
+app.MapGet("/get-customer", async (IServiceProvider serviceProvider) =>
 {
     var client = serviceProvider.GetRequiredService<IClusterClient>();
-    var greetingGrain = client.GetGrain<IGreetingGrain>(Guid.NewGuid());
-    await greetingGrain.SayHelloAsync();
-    await greetingGrain.SayHelloAsync("Islam");
-    return Results.Ok();
+    var customersGrain = client.GetGrain<ICustomersGrain>(Guid.NewGuid());
+    var customer = await customersGrain.GetCustomerAsync(Guid.NewGuid());
+    return Results.Ok(customer);
 });
 
 app.Run();
