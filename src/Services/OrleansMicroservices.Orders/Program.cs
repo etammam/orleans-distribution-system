@@ -1,30 +1,74 @@
+using System.CommandLine;
 using System.Net;
 using OrleansMicroservices.Common;
 using OrleansMicroservices.IMessages;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddConsulClient(options =>
-{
-    options.Address = new Uri("http://localhost:8500");
-});
+var useConsul = false;
 
-builder.Services.AddConsulService(service =>
+var useConsulOption = new Option<bool>(
+    name: "--use-consul",
+    description: "allow application to setup cluster into consul");
+
+var urlsOptions = new Option<string[]>(
+    name: "--urls", description: "application host.");
+
+var rootCommand = new RootCommand();
+rootCommand.AddOption(useConsulOption);
+rootCommand.AddOption(urlsOptions);
+
+rootCommand.SetHandler(option => useConsul = option, useConsulOption);
+await rootCommand.InvokeAsync(args);
+
+Console.WriteLine($"consul hook {useConsul}");
+
+if (useConsul)
 {
-    service.ServiceName = "orders-service";
-    service.ServiceNameId = $"orders-service-{Guid.NewGuid():N}";
-    service.UrlSegment = "orders";
-});
+
+    builder.Services.AddConsulClient(options =>
+    {
+        options.Address = new Uri("http://localhost:8500");
+    });
+
+    builder.Services.AddConsulService(service =>
+    {
+        service.ServiceName = "orders-service";
+        service.ServiceNameId = $"orders-service-{Guid.NewGuid():N}";
+        service.UrlSegment = "orders";
+    });
+}
+
+const string connectionString = "Data Source=localhost\\sqlexpress;Initial Catalog=Trash-Orleans;Integrated Security=true;TrustServerCertificate=True";
+const string invariant = "System.Data.SqlClient";
 
 builder.Host.UseOrleans(siloBuilder =>
 {
     siloBuilder.AddActivityPropagation();
-    siloBuilder.AddMemoryGrainStorage("OrleansMemoryProvider-Orders");
 
-    siloBuilder.UseConsulSiloClustering(consulOptions =>
+    siloBuilder.AddMemoryGrainStorage("OrleansMemoryProvider-Orders");
+    //siloBuilder.AddAdoNetGrainStorage("Orleans-Orders", options =>
+    //{
+    //    options.ConnectionString = connectionString;
+    //    options.Invariant = invariant;
+    //});
+
+    if (useConsul)
     {
-        consulOptions.ConfigureConsulClient(new Uri("http://localhost:8500"));
-    });
+        siloBuilder.UseConsulSiloClustering(consulOptions =>
+        {
+            consulOptions.ConfigureConsulClient(new Uri("http://localhost:8500"));
+        });
+    }
+    else
+    {
+        siloBuilder.UseAdoNetClustering(cluster =>
+        {
+            cluster.ConnectionString = connectionString;
+            cluster.Invariant = invariant;
+        });
+    }
+
 
     siloBuilder.ConfigureEndpoints(
         advertisedIP: IPAddress.Loopback,
@@ -48,11 +92,29 @@ app.MapGet("/get-customer", async (IServiceProvider serviceProvider) =>
     return Results.Ok(customer);
 });
 
-var lifetime = app.Services.GetService<IHostApplicationLifetime>();
-
-lifetime?.ApplicationStopping.Register(() =>
+app.MapGet("/throw-an-exception", async (IServiceProvider serviceProvider) =>
 {
-    app.Services.LeaveConsulAsync().Wait();
-}, false);
+    var client = serviceProvider.GetRequiredService<IClusterClient>();
+    var customersGrain = client.GetGrain<ICustomersGrain>(Guid.NewGuid());
+    try
+    {
+        await customersGrain.ThrowException();
+    }
+    catch (Exception e)
+    {
+        return Results.BadRequest(e.Message);
+    }
+    return Results.Ok();
+});
+
+if (useConsul)
+{
+    var lifetime = app.Services.GetService<IHostApplicationLifetime>();
+
+    lifetime?.ApplicationStopping.Register(() =>
+    {
+        app.Services.LeaveConsulAsync().Wait();
+    }, false);
+}
 
 app.Run();

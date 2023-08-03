@@ -2,15 +2,28 @@
 
 	<PropertyGroup>
 		<TargetFramework>net7.0</TargetFramework>
-		<Nullable>enable</Nullable>
+		<Nullable>disable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
 	</PropertyGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Console" Version="7.0.0" />
-		<PackageReference Include="Microsoft.Orleans.Clustering.Consul" Version="7.2.0" />
-		<PackageReference Include="Microsoft.Orleans.Server" Version="7.2.0" />
+		<PackageReference Include="Microsoft.Orleans.Clustering.AdoNet" Version="7.2.1" />
+		<PackageReference Include="Microsoft.Orleans.Clustering.Consul" Version="7.2.1" />
+		<PackageReference Include="Microsoft.Orleans.OrleansTelemetryConsumers.Counters" Version="3.7.1" />
+		<PackageReference Include="Microsoft.Orleans.Persistence.AdoNet" Version="7.2.1" />
+		<PackageReference Include="Microsoft.Orleans.Server" Version="7.2.1" />
+		<PackageReference Include="Microsoft.Orleans.Client" Version="7.2.1" />
+		<PackageReference Include="OrleansDashboard" Version="7.2.2" />
+		<PackageReference Include="OrleansDashboard.Client" Version="2.4.5" />
+		<PackageReference Include="OrleansDashboard.EmbeddedAssets" Version="7.2.2" />
+		<PackageReference Include="System.CommandLine" Version="2.0.0-beta4.22272.1" />
+		<PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
+
+		<PackageReference Include="OpenTelemetry.Exporter.Zipkin" Version="1.4.0-rc.4" />
+		<PackageReference Include="OpenTelemetry.Extensions.Hosting" Version="1.4.0-rc.4" />
+
 	</ItemGroup>
 
 	<ItemGroup>

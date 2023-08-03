@@ -3,6 +3,7 @@
     public interface ICustomersGrain : IGrainWithGuidKey
     {
         Task<Customer> GetCustomerAsync(Guid customerId);
+        Task ThrowException();
     }
 
     [GenerateSerializer]
