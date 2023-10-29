@@ -1,5 +1,8 @@
 using System.CommandLine;
 using System.Net;
+using Microsoft.Extensions.Options;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
 using OrleansMicroservices.Common;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -40,7 +43,22 @@ if (useConsul)
 const string connectionString = "Data Source=localhost\\sqlexpress;Initial Catalog=Trash-Orleans;Integrated Security=true;TrustServerCertificate=True";
 const string invariant = "System.Data.SqlClient";
 
+// builder.Services.AddOpenTelemetry()
+//     .WithTracing(tracing =>
+//     {
+//         // Set a service name
+//         tracing.SetResourceBuilder(
+//             ResourceBuilder.CreateDefault()
+//                 .AddService(serviceName: "Customers", serviceVersion: "1.0"));
 
+//         tracing.AddSource("Microsoft.Orleans.Runtime");
+//         tracing.AddSource("Microsoft.Orleans.Application");
+
+//         tracing.AddZipkinExporter(zipkin =>
+//         {
+//             zipkin.Endpoint = new Uri("http://localhost:9411/api/v2/spans");
+//         });
+//     });
 
 builder.Host.UseOrleans(siloBuilder =>
 {
@@ -77,11 +95,21 @@ builder.Host.UseOrleans(siloBuilder =>
     );
 
     siloBuilder.UseInMemoryReminderService();
-});
 
+    // siloBuilder.UseLocalhostClustering();
+    siloBuilder.UseDashboard(x =>
+    {
+        x.HostSelf = true;
+        x.HideTrace = true;
+    });
+
+});
+// builder.UsePerfCounterEnvironmentStatistics();
 var app = builder.Build();
 
 app.MapGet("/", () => "Customers Server Working...!");
+
+app.Map("/orleans", x => x.UseOrleansDashboard());
 
 if (useConsul)
 {

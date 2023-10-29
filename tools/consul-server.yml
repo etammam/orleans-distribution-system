@@ -1,4 +1,4 @@
-version: '3.7'
+version: "3.7"
 
 services:
   consul-server-actor-microservices:
@@ -6,14 +6,21 @@ services:
     container_name: consul-server
     restart: always
     volumes:
-     - ./Consul/server.json:/consul/config/server.json:ro
-     - ./Consul/certs/:/consul/config/certs/:ro
+      - ./Consul/server.json:/consul/config/server.json:ro
+      - ./Consul/certs/:/consul/config/certs/:ro
     networks:
       - consul
     ports:
       - "8500:8500"
       - "8600:8600/tcp"
       - "8600:8600/udp"
+  zipkin:
+    image: openzipkin/zipkin
+    container_name: zipkin
+    networks:
+      - consul
+    ports:
+      - "9411:9411"
 networks:
   consul:
     driver: bridge

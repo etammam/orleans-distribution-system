@@ -1,5 +1,7 @@
 using System.CommandLine;
 using System.Net;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
 using OrleansMicroservices.Common;
 using OrleansMicroservices.IMessages;
 
@@ -22,6 +24,23 @@ rootCommand.SetHandler(option => useConsul = option, useConsulOption);
 await rootCommand.InvokeAsync(args);
 
 Console.WriteLine($"consul hook {useConsul}");
+
+builder.Services.AddOpenTelemetry()
+    .WithTracing(tracing =>
+    {
+        // Set a service name
+        tracing.SetResourceBuilder(
+            ResourceBuilder.CreateDefault()
+                .AddService(serviceName: "Orders", serviceVersion: "1.0"));
+
+        tracing.AddSource("Microsoft.Orleans.Runtime");
+        tracing.AddSource("Microsoft.Orleans.Application");
+
+        tracing.AddZipkinExporter(zipkin =>
+        {
+            zipkin.Endpoint = new Uri("http://localhost:9411/api/v2/spans");
+        });
+    });
 
 if (useConsul)
 {
